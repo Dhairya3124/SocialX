@@ -7,6 +7,7 @@ func main() {
 	app := &application{
 		config: cfg,
 	}
-	log.Fatal(app.run())
+	mux := app.mount()
+	log.Fatal(app.run(mux))
 
 }
