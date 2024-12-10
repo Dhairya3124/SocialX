@@ -1,9 +1,13 @@
 package main
 
-import "log"
+import (
+	"log"
+
+	"github.com/Dhairya3124/SocialX/internal/env"
+)
 
 func main() {
-	cfg := config{addr: ":8080"}
+	cfg := config{addr: env.GetString("ADDR",":8080")}
 	app := &application{
 		config: cfg,
 	}
