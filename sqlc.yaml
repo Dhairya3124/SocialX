@@ -1,0 +1,8 @@
+version: "2"
+sql:
+  - schema: "cmd/migrate/migrations/schema"
+    queries: "cmd/migrate/migrations/queries"
+    engine: "postgresql"
+    gen:
+      go:
+        out: "internal/database"
