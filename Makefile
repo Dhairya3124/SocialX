@@ -17,3 +17,7 @@ up:
 
 down:
 	$(GOOSE_CMD) postgres -dir $(DB_DIR) $(DB_ADDR) down
+
+
+fmt:
+	go fmt ./...
