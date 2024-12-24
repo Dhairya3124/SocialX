@@ -3,5 +3,7 @@ package main
 import "net/http"
 
 func (app *application) healthCheckHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("OK"))
+	if err:=app.jsonResponse(w,http.StatusOK,"OK");err!=nil{
+		writeJSONError(w,http.StatusInternalServerError,err.Error())
+	}
 }

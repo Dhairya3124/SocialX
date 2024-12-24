@@ -31,7 +31,7 @@ func writeJSONError(w http.ResponseWriter, status int, message string) error {
 }
 
 // jsonResponse function is simple func which returns in the format:  data:
-func jsonResponse(w http.ResponseWriter, status int, data any) error {
+func (app *application)jsonResponse(w http.ResponseWriter, status int, data any) error {
 	type envelope struct {
 		Data any `json:"data"`
 	}
