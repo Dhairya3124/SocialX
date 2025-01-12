@@ -10,7 +10,9 @@ import (
 
 func main() {
 	cfg := config{
-		addr: env.GetString("ADDR", ":8080"),
+
+		addr: env.GetString("ADDR", ":3000"),
+		
 		db: dbConfig{
 			addr:         env.GetString("DB_ADDR", "postgres://admin:adminpassword@localhost/socialnetwork?sslmode=disable"),
 			maxOpenConns: env.GetInt("DB_MAX_OPEN_CONNS", 30),
@@ -25,6 +27,8 @@ func main() {
 	defer db.Close()
 	log.Println("database connection pool established")
 
+
+	
 	store := store.NewStorage(db)
 	app := &application{
 		config: cfg,
