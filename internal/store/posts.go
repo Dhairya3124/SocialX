@@ -73,7 +73,7 @@ func (s *PostStore) GetById(ctx context.Context, id int64) (*Post, error) {
 
 	return &post, nil
 }
-func (s *PostStore) DeletePost(ctx context.Context, id int64) error {
+func (s *PostStore) Delete(ctx context.Context, id int64) error {
 	query := `DELETE FROM posts WHERE id = $1`
 	res, err := s.db.ExecContext(ctx, query, id)
 	if err != nil {
