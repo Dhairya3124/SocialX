@@ -19,6 +19,10 @@ type CreatePostsPayload struct {
 	Content string   `json:"content" validate:"required,max=1000"`
 	Tags    []string `json:"tags"`
 }
+type UpdatePostsPayload struct {
+	Title   *string `json:"title" validate:"omitempty,max=100"`
+	Content *string `json:"content" validate:"omitempty,max=1000"`
+}
 
 func (app *application) createPostHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
@@ -51,6 +55,13 @@ func (app *application) createPostHandler(w http.ResponseWriter, r *http.Request
 }
 func (app *application) getPostHandler(w http.ResponseWriter, r *http.Request) {
 	post := getPostFromCtx(r)
+	comments, err := app.store.Comments.GetByPostID(r.Context(), post.ID)
+	if err != nil {
+		app.internalServerError(w, r, err)
+		return
+	}
+
+	post.Comments = comments
 	if err := app.jsonResponse(w, http.StatusOK, post); err != nil {
 		app.internalServerError(w, r, err)
 		return
@@ -74,6 +85,32 @@ func (app *application) deletePostHandler(w http.ResponseWriter, r *http.Request
 			app.internalServerError(w, r, err)
 		}
 		return
+	}
+
+}
+func (app *application) updatePostHandler(w http.ResponseWriter, r *http.Request) {
+	post := getPostFromCtx(r)
+	var payload UpdatePostsPayload
+	if err := readJSON(w, r, &payload); err != nil {
+		app.internalServerError(w, r, err)
+		return
+	}
+	if err := Validate.Struct(payload); err != nil {
+		app.badRequestResponse(w, r, err)
+		return
+	}
+	if payload.Content != nil {
+		post.Content = *payload.Content
+	}
+	if payload.Title != nil {
+		post.Title = *payload.Title
+	}
+	if err := app.store.Posts.Update(r.Context(), post); err != nil {
+		app.badRequestResponse(w, r, err)
+		return
+	}
+	if err := app.jsonResponse(w, http.StatusOK, post); err != nil {
+		app.internalServerError(w, r, err)
 	}
 
 }
