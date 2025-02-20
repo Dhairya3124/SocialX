@@ -53,6 +53,7 @@ func (s *UserStore) GetById(ctx context.Context, id int64) (*User, error) {
 	).Scan(
 		&user.ID,
 		&user.Email,
+		&user.Username,
 		&user.Password,
 		&user.CreatedAt,
 	)
