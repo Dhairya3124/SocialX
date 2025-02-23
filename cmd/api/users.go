@@ -21,6 +21,12 @@ func (app *application) getUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+func (app *application) followUserHandler(w http.ResponseWriter, r *http.Request) {
+	
+}
+func (app *application) unfollowUserHandler(w http.ResponseWriter, r *http.Request) {
+}
+
 func (app *application) usersContextMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		idParam := chi.URLParam(r, "userID")
