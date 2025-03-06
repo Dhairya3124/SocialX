@@ -9,6 +9,10 @@ type PaginatedFeedQuery struct {
 	Limit  int    `json:"limit" validate:"gte=1,lte=20"`
 	Offset int    `json:"offset" validate:"gte=0"`
 	Sort   string `json:"sort" validate:"oneof=asc desc"`
+	Title  string  `json:"title"`
+	Content string `json:"content"`
+	Tags  []string `json:"tags"`
+
 }
 
 func (fq PaginatedFeedQuery) Pagination(r *http.Request) (PaginatedFeedQuery, error) {
