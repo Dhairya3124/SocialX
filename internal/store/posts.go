@@ -142,14 +142,18 @@ FROM
     LEFT JOIN comments c ON c.post_id = p.id  
 		LEFT JOIN users u on p.user_id = u.id
     JOIN followers f ON f.follower_id = p.user_id  OR p.user_id = $1
-		WHERE f.user_id = $1 OR p.user_id = $1
+		WHERE f.user_id = $1 AND
+		(p.title ILIKE '%' || $4 || '%' OR p.content ILIKE '%' || $4 || '%') AND
+		(p.tags @> $5 OR $5 = '{}') AND
+		(CASE WHEN $6::text = '' THEN true ELSE p.created_at >= $6::timestamp END) AND
+    (CASE WHEN $7::text = '' THEN true ELSE p.created_at <= $7::timestamp END)
 		GROUP BY p.id,u.username
 		ORDER BY p.created_at ` + fq.Sort + `
 		LIMIT $2 OFFSET $3
 	`
 	ctx, cancel := context.WithTimeout(ctx, QueryTimeOutDuration)
 	defer cancel()
-	rows, err := s.db.QueryContext(ctx, query, userID, fq.Limit, fq.Offset)
+	rows, err := s.db.QueryContext(ctx, query, userID, fq.Limit, fq.Offset, fq.Search, pq.Array(fq.Tags), fq.Since, fq.Until)
 	if err != nil {
 		return nil, err
 	}
