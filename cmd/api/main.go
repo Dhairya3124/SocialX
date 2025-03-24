@@ -6,6 +6,7 @@ import (
 	"github.com/Dhairya3124/SocialX/internal/db"
 	"github.com/Dhairya3124/SocialX/internal/env"
 	"github.com/Dhairya3124/SocialX/internal/store"
+	"go.uber.org/zap"
 )
 
 const version = "0.0.1"
@@ -29,6 +30,10 @@ const version = "0.0.1"
 //	@name						Authorization
 
 func main() {
+	
+	// Logger
+	logger:=zap.Must(zap.NewProduction()).Sugar()
+	defer logger.Sync()
 	cfg := config{
 
 		addr:   env.GetString("ADDR", ":3000"),
