@@ -1,8 +1,6 @@
 package main
 
 import (
-	"log"
-
 	"github.com/Dhairya3124/SocialX/internal/db"
 	"github.com/Dhairya3124/SocialX/internal/env"
 	"github.com/Dhairya3124/SocialX/internal/store"
@@ -48,17 +46,18 @@ func main() {
 	}
 	db, err := db.New(cfg.db.addr, cfg.db.maxOpenConns, cfg.db.maxIdleConns, cfg.db.maxIdleTime)
 	if err != nil {
-		log.Panic(err)
+		logger.Panic(err)
 	}
 	defer db.Close()
-	log.Println("database connection pool established")
+	logger.Info("database connection pool established")
 
 	store := store.NewStorage(db)
 	app := &application{
+		logger: logger,
 		config: cfg,
 		store:  store,
 	}
 	mux := app.mount()
-	log.Fatal(app.run(mux))
+	logger.Fatal(app.run(mux))
 
 }
