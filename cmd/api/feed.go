@@ -5,6 +5,7 @@ import (
 
 	"github.com/Dhairya3124/SocialX/internal/store"
 )
+
 // getUserFeedHandler godoc
 //
 //	@Summary		Fetches the user feed

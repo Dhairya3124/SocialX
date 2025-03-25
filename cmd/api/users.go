@@ -13,6 +13,7 @@ import (
 type userKey string
 
 const userCtx userKey = "user"
+
 // GetUser godoc
 //
 //	@Summary		Fetches a user profile
@@ -38,6 +39,7 @@ func (app *application) getUserHandler(w http.ResponseWriter, r *http.Request) {
 type FollowUser struct {
 	UserID int64 `json:"user_id"`
 }
+
 // FollowUser godoc
 //
 //	@Summary		Follows a user
@@ -76,6 +78,7 @@ func (app *application) followUserHandler(w http.ResponseWriter, r *http.Request
 	}
 
 }
+
 // UnfollowUser gdoc
 //
 //	@Summary		Unfollow a user

@@ -1,6 +1,7 @@
 package main
 
 import "net/http"
+
 // healthCheckHandler godoc
 //
 //	@Summary		Healthcheck

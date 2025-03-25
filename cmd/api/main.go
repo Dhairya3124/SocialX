@@ -28,15 +28,15 @@ const version = "0.0.1"
 //	@name						Authorization
 
 func main() {
-	
+
 	// Logger
-	logger:=zap.Must(zap.NewProduction()).Sugar()
+	logger := zap.Must(zap.NewProduction()).Sugar()
 	defer logger.Sync()
 	cfg := config{
 
 		addr:   env.GetString("ADDR", ":3000"),
 		apiURL: env.GetString("EXTERNAL_URL", "localhost:8080"),
-		env: env.GetString("ENV", "development"),
+		env:    env.GetString("ENV", "development"),
 		db: dbConfig{
 			addr:         env.GetString("DB_ADDR", "postgres://admin:adminpassword@localhost/socialnetwork?sslmode=disable"),
 			maxOpenConns: env.GetInt("DB_MAX_OPEN_CONNS", 30),

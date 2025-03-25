@@ -23,6 +23,7 @@ type UpdatePostsPayload struct {
 	Title   *string `json:"title" validate:"omitempty,max=100"`
 	Content *string `json:"content" validate:"omitempty,max=1000"`
 }
+
 // createPostHandler godoc
 //
 //	@Summary		Creates a post
@@ -66,6 +67,7 @@ func (app *application) createPostHandler(w http.ResponseWriter, r *http.Request
 		return
 	}
 }
+
 // GetPost godoc
 //
 //	@Summary		Fetches a post

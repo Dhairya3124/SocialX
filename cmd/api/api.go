@@ -17,7 +17,6 @@ type application struct {
 	config config
 	store  store.Storage
 	logger *zap.SugaredLogger
-
 }
 type config struct {
 	addr   string
@@ -84,6 +83,6 @@ func (app *application) run(mux http.Handler) error {
 		Addr:    app.config.addr,
 		Handler: mux,
 	}
-	app.logger.Infow("server has started","addr", app.config.addr,"env",app.config.env)
+	app.logger.Infow("server has started", "addr", app.config.addr, "env", app.config.env)
 	return srv.ListenAndServe()
 }
